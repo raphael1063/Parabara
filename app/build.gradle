@@ -16,7 +16,8 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-        buildConfigField "String", "SERVER_URL", '"https://api.recruit-test.parabara.kr"'
+        buildConfigField "String", "BASE_URL", '"https://api.recruit-test.parabara.kr"'
+        buildConfigField "String", "SERVER_TOKEN", '"16lZnEf1Yh0B1hxSeg2IOksX"'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
