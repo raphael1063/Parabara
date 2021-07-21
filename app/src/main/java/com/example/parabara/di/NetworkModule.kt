@@ -3,6 +3,8 @@ package com.example.parabara.di
 import com.example.parabara.BuildConfig
 import com.example.parabara.BuildConfig.BASE_URL
 import com.example.parabara.BuildConfig.SERVER_TOKEN
+import com.example.parabara.base.TOKEN
+import com.example.parabara.base.URL
 import com.example.parabara.data.api.ApiService
 import com.example.parabara.data.api.Interceptor
 import dagger.Module
@@ -24,17 +26,24 @@ import javax.inject.Singleton
 object NetworkModule {
 
     @Provides
+    @Named(URL)
     fun provideBaseUrl() = BASE_URL
 
     @Provides
+    @Named(TOKEN)
     fun provideServerToken() = SERVER_TOKEN
 
     @Provides
     @Singleton
-    fun provideOkHttpClient() =
+    fun provideInterceptor(@Named(TOKEN) token: String): Interceptor =
+        Interceptor(token)
+
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(interceptor: Interceptor) =
         OkHttpClient
             .Builder()
-            .addInterceptor (Interceptor())
+            .addInterceptor (interceptor)
             .callTimeout(40, TimeUnit.SECONDS)
             .connectTimeout(40, TimeUnit.SECONDS)
             .readTimeout(40, TimeUnit.SECONDS)
@@ -50,7 +59,7 @@ object NetworkModule {
     @Singleton
     fun provideAQIRetrofit(
         okHttpClient: OkHttpClient,
-        BASE_URL: String
+        @Named(URL) BASE_URL: String
     ): Retrofit =
         Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())

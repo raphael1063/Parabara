@@ -16,6 +16,5 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(R.layou
     }
 
     override fun observe() {
-        TODO("Not yet implemented")
     }
 }
