@@ -2,6 +2,7 @@ package com.example.parabara.ui.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.parabara.Event
 import com.example.parabara.R
 import com.example.parabara.base.*
 import com.example.parabara.data.Repository
@@ -16,6 +17,9 @@ class ProductListViewModel @Inject constructor(private val repository: Repositor
 
     private val _list = MutableLiveData<List<Row>?>()
     val list: LiveData<List<Row>?> = _list
+
+    private val _actionApplyButtonClicked = MutableLiveData<Event<Unit>>()
+    val actionApplyButtonClicked: LiveData<Event<Unit>> = _actionApplyButtonClicked
 
     init {
         getList()
@@ -43,6 +47,10 @@ class ProductListViewModel @Inject constructor(private val repository: Repositor
             }, {
 
             }).addTo(compositeDisposable)
+    }
+
+    fun onApplyButtonClicked() {
+        _actionApplyButtonClicked.value = Event(Unit)
     }
 
     companion object {

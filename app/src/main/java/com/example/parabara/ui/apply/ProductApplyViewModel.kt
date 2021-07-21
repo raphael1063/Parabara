@@ -6,6 +6,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ProductApplyViewModel @Inject constructor(repository: Repository): BaseViewModel() {
+class ProductApplyViewModel @Inject constructor(private val repository: Repository): BaseViewModel() {
 
 }
