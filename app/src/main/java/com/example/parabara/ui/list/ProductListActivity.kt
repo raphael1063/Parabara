@@ -4,10 +4,12 @@ import androidx.activity.viewModels
 import com.example.parabara.R
 import com.example.parabara.base.BaseActivity
 import com.example.parabara.databinding.ActivityProductListBinding
+import com.example.parabara.ext.toast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ProductListActivity : BaseActivity<ActivityProductListBinding>(R.layout.activity_product_list) {
+class ProductListActivity :
+    BaseActivity<ActivityProductListBinding>(R.layout.activity_product_list) {
 
     private val viewModel: ProductListViewModel by viewModels()
 
@@ -23,7 +25,16 @@ class ProductListActivity : BaseActivity<ActivityProductListBinding>(R.layout.ac
     }
 
     override fun observe() {
-
+        with(viewModel) {
+            list.observe(this@ProductListActivity, { list ->
+                adapter.submitList(list)
+            })
+            showToastInt.observe(this@ProductListActivity, { event ->
+                event.getContentIfNotHandled()?.let {
+                    toast(it)
+                }
+            })
+        }
     }
 
 }

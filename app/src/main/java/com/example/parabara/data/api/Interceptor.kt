@@ -5,13 +5,13 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
 
-class Interceptor @Inject constructor(token: String) : Interceptor {
+class Interceptor @Inject constructor(private val token: String) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request().newBuilder()
         val requestUrl = chain.request().url.toString()
 
         if (requestUrl.startsWith(BuildConfig.BASE_URL)) {
-            request.addHeader(X_TOKEN, BuildConfig.SERVER_TOKEN)
+            request.addHeader(X_TOKEN, token)
         }
         return chain.proceed(request.build())
     }

@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Parabara</string>
+
+    <string name="empty_list_message">조회할 상품이 없습니다.</string>
+    <string name="network_error_message">네트워크 상태가 불안정합니다. 잠시 후 다시 시도해주세요.</string>
+    <string name="server_error_message">서버와의 통신이 원활하지 않습니다. 잠시 후 다시 시도해주세요.</string>
 </resources>

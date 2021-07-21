@@ -29,7 +29,7 @@ interface Repository {
     /**
      * 상품 리스트 조회
      */
-    fun getProductList(model: ProductListRequest): Single<ResponseData<ProductListResult>>
+    fun getProductList(page: Int, size: Int): Single<ResponseData<ProductListResult>>
 
     /**
      * 상품 상세 조회

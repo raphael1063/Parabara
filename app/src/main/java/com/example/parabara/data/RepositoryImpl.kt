@@ -26,23 +26,23 @@ class RepositoryImpl @Inject constructor(private val apiService: ApiService): Re
      * 상품 업데이트
      */
     override fun updateProduct(model: ProductUpdateRequest): Single<ResponseData<ProductUpdateResult>> =
-        updateProduct(model)
+        apiService.updateProduct(model)
 
     /**
      * 상품 삭제
      */
     override fun removeProduct(id: Long): Single<ResponseData<ProductRemoveResult>> =
-        removeProduct(id)
+        apiService.removeProduct(id)
 
     /**
      * 상품 리스트 조회
      */
-    override fun getProductList(model: ProductListRequest): Single<ResponseData<ProductListResult>> =
-        getProductList(model)
+    override fun getProductList(page: Int, size: Int): Single<ResponseData<ProductListResult>> =
+        apiService.getProductList(page, size)
 
     /**
      * 상품 상세 조회
      */
     override fun getProductDetail(id: Long): Single<ResponseData<ProductDetailResult>> =
-        getProductDetail(id)
+        apiService.getProductDetail(id)
 }
