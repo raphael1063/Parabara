@@ -36,7 +36,10 @@ interface ApiService {
      * 상품 리스트 조회
      */
     @GET("/api/product")
-    fun getProductList(@Body model: ProductListRequest): Single<ResponseData<ProductListResult>>
+    fun getProductList(
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): Single<ResponseData<ProductListResult>>
 
     /**
      * 상품 상세 조회
