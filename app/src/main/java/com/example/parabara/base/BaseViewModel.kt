@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.parabara.Event
+import com.example.parabara.data.entities.ResponseData
 import io.reactivex.disposables.CompositeDisposable
 
 abstract class BaseViewModel : ViewModel() {
@@ -16,6 +17,7 @@ abstract class BaseViewModel : ViewModel() {
 
     private val _showToastInt = MutableLiveData<Event<Int>>()
     val showToastInt: LiveData<Event<Int>> = _showToastInt
+
 
     protected val compositeDisposable = CompositeDisposable()
 
@@ -33,5 +35,13 @@ abstract class BaseViewModel : ViewModel() {
 
     fun showToast(message: Int) {
         _showToastInt.value = Event(message)
+    }
+
+    fun <T> ResponseData<T>.onResult(doOnSuccess: () -> Unit) {
+        when (this.status) {
+            STATUS_SUCCESS -> doOnSuccess()
+            STATUS_INVALID -> showToast(this.message)
+            STATUS_SERVER_ERROR -> showToast(this.message)
+        }
     }
 }
