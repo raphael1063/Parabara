@@ -17,12 +17,13 @@ interface ApiService {
     /**
      * 상품 등록
      */
+    @FormUrlEncoded
     @POST("/api/product")
     fun applyProduct(
-        @Query("title") title: String,
-        @Query("price") price: Long,
-        @Query("content") content: String,
-        @Query("images") images: List<Long>?
+        @Field("title") title: String,
+        @Field("price") price: Long,
+        @Field("content") content: String,
+        @Field("images") images: List<Long>?
     ): Single<ResponseData<ProductApplyResult>>
 
     /**
