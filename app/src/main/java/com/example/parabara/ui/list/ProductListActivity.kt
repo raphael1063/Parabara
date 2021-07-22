@@ -6,7 +6,7 @@ import com.example.parabara.base.BaseActivity
 import com.example.parabara.databinding.ActivityProductListBinding
 import com.example.parabara.ext.openActivity
 import com.example.parabara.ext.toast
-import com.example.parabara.ui.apply.ProductApplyActivity
+import com.example.parabara.ui.product.ProductActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,7 +33,7 @@ class ProductListActivity :
             })
             actionApplyButtonClicked.observe(this@ProductListActivity, { event ->
                 event.getContentIfNotHandled()?.let {
-                    openActivity(ProductApplyActivity::class.java)
+                    openActivity(ProductActivity::class.java)
                 }
             })
             showToastInt.observe(this@ProductListActivity, { event ->

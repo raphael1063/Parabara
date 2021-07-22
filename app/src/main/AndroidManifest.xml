@@ -3,6 +3,7 @@
     package="com.example.parabara">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".base.BaseApplication"
@@ -19,7 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.apply.ProductApplyActivity" />
+        <activity android:name=".ui.product.ProductActivity" />
         <activity android:name=".ui.detail.ProductDetailActivity" />
     </application>
 
