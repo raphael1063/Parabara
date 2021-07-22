@@ -102,7 +102,8 @@ class ProductActivity : BaseActivity<ActivityProductBinding>(R.layout.activity_p
 
             })
             finishActivity.observe(this@ProductActivity, { event ->
-                event.getContentIfNotHandled()?.let {
+                event.getContentIfNotHandled()?.let { result ->
+                    setResult(result)
                     finish()
                 }
             })

@@ -43,8 +43,7 @@ class ProductListActivity :
             })
             actionApplyButtonClicked.observe(this@ProductListActivity, { event ->
                 event.getContentIfNotHandled()?.let {
-                    openActivity(ProductActivity::class.java)
-                    productDetailLauncher.launch(Intent())
+                    productDetailLauncher.launch(Intent(this@ProductListActivity, ProductActivity::class.java))
                 }
             })
             showToastInt.observe(this@ProductListActivity, { event ->

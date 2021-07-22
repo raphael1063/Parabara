@@ -30,8 +30,8 @@ class ProductListViewModel @Inject constructor(private val repository: Repositor
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ response ->
                 response.onResult {
-                    response.data?.let {
-                        _list.value = it.rows
+                    response.data?.let { data ->
+                        _list.value = data.rows.map { it.copy() }
                     } ?: run {
                         showToast(R.string.empty_list_message)
                     }

@@ -1,5 +1,7 @@
 package com.example.parabara.ui.product
 
+import android.app.Activity.RESULT_CANCELED
+import android.app.Activity.RESULT_OK
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.parabara.Event
@@ -32,8 +34,8 @@ class ProductViewModel @Inject constructor(private val repository: Repository) :
     private val _actionImageChooserClicked = MutableLiveData<Event<Int>>()
     val actionImageChooserClicked: LiveData<Event<Int>> = _actionImageChooserClicked
 
-    private val _finishActivity = MutableLiveData<Event<Unit>>()
-    val finishActivity: LiveData<Event<Unit>> = _finishActivity
+    private val _finishActivity = MutableLiveData<Event<Int>>()
+    val finishActivity: LiveData<Event<Int>> = _finishActivity
 
     private fun uploadImages(image: MultipartBody.Part) {
         repository.uploadImage(image)
@@ -61,10 +63,10 @@ class ProductViewModel @Inject constructor(private val repository: Repository) :
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ response ->
                 response.onResult {
-                    _finishActivity.value = Event(Unit)
+                    _finishActivity.value = Event(RESULT_OK)
                 }
             }, {
-                    _finishActivity.value = Event(Unit)
+                    _finishActivity.value = Event(RESULT_CANCELED)
             }).addTo(compositeDisposable)
     }
 
