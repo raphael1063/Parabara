@@ -36,9 +36,6 @@ class ProductViewModel @Inject constructor(private val repository: Repository) :
     private val _actionImageChooserClicked = MutableLiveData<Event<Int>>()
     val actionImageChooserClicked: LiveData<Event<Int>> = _actionImageChooserClicked
 
-    private val _finishActivity = MutableLiveData<Event<Int>>()
-    val finishActivity: LiveData<Event<Int>> = _finishActivity
-
     private val _mode = MutableLiveData(Mode.APPLY)
     val mode: LiveData<Mode> = _mode
 
@@ -83,10 +80,10 @@ class ProductViewModel @Inject constructor(private val repository: Repository) :
             .doFinally { showLoading(false) }
             .subscribe({ response ->
                 response.onResult {
-                    _finishActivity.value = Event(RESULT_OK)
+                    finishActivity(RESULT_OK)
                 }
             }, {
-                _finishActivity.value = Event(RESULT_CANCELED)
+                finishActivity(RESULT_CANCELED)
             }).addTo(compositeDisposable)
     }
 
@@ -97,10 +94,10 @@ class ProductViewModel @Inject constructor(private val repository: Repository) :
             .doFinally { showLoading(false) }
             .subscribe({ response ->
                 response.onResult {
-                    _finishActivity.value = Event(RESULT_OK)
+                    finishActivity(RESULT_OK)
                 }
             }, {
-                _finishActivity.value = Event(RESULT_CANCELED)
+                finishActivity(RESULT_CANCELED)
             }).addTo(compositeDisposable)
     }
 

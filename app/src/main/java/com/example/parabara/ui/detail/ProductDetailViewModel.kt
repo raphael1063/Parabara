@@ -1,5 +1,6 @@
 package com.example.parabara.ui.detail
 
+import android.app.Activity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.parabara.Event
@@ -50,8 +51,24 @@ class ProductDetailViewModel @Inject constructor(private val repository: Reposit
             }).addTo(compositeDisposable)
     }
 
+    private fun removeProduct(id: Long) {
+        repository.removeProduct(id)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ response ->
+                response.onResult {
+                    finishActivity(Activity.RESULT_OK)
+                }
+            }, {
+                finishActivity(Activity.RESULT_CANCELED)
+            }).addTo(compositeDisposable)
+    }
+
     fun refresh() {
         getProductDetail(currentId)
+    }
+
+    fun onDeleteButtonClicked() {
+        removeProduct(currentId)
     }
 
     fun onEditButtonClicked(productInfo: ProductDetailResult) {

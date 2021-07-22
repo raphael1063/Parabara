@@ -24,7 +24,7 @@ interface Repository {
     /**
      * 상품 삭제
      */
-    fun removeProduct(id: Long): Single<ResponseData<ProductRemoveResult>>
+    fun removeProduct(id: Long): Single<ResponseData<Boolean>>
 
     /**
      * 상품 리스트 조회

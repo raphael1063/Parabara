@@ -7,13 +7,14 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import com.example.parabara.R
 import com.example.parabara.base.BaseActivity
 import com.example.parabara.databinding.ActivityProductDetailBinding
+import com.example.parabara.ui.alert.AlertDialogFragment
 import com.example.parabara.ui.product.ProductActivity
 import com.example.parabara.util.CirclePagerIndicatorDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ProductDetailActivity :
-    BaseActivity<ActivityProductDetailBinding>(R.layout.activity_product_detail) {
+    BaseActivity<ActivityProductDetailBinding>(R.layout.activity_product_detail), AlertDialogFragment.AlertDialogResultListener {
 
     private val viewModel: ProductDetailViewModel by viewModels()
 
@@ -50,11 +51,28 @@ class ProductDetailActivity :
                     })
                 }
             })
+            actionRemoveButtonClicked.observe(this@ProductDetailActivity, { event ->
+                event.getContentIfNotHandled()?.let {
+                    AlertDialogFragment().apply {
+                        setListener(this@ProductDetailActivity )
+                    }.show(supportFragmentManager, null)
+                }
+            })
+            finishActivity.observe(this@ProductDetailActivity, { event ->
+                event.getContentIfNotHandled()?.let {
+                    setResult(it)
+                    finish()
+                }
+            })
         }
     }
 
     override fun onBackPressed() {
         setResult(RESULT_OK)
         super.onBackPressed()
+    }
+
+    override fun onDeleteClicked() {
+        viewModel.onDeleteButtonClicked()
     }
 }

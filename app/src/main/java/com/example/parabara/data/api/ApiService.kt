@@ -42,7 +42,7 @@ interface ApiService {
      * 상품 삭제
      */
     @DELETE("/api/product/{id}")
-    fun removeProduct(@Path("id") id: Long): Single<ResponseData<ProductRemoveResult>>
+    fun removeProduct(@Path("id") id: Long): Single<ResponseData<Boolean>>
 
     /**
      * 상품 리스트 조회

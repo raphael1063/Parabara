@@ -31,7 +31,7 @@ class RepositoryImpl @Inject constructor(private val apiService: ApiService) : R
     /**
      * 상품 삭제
      */
-    override fun removeProduct(id: Long): Single<ResponseData<ProductRemoveResult>> =
+    override fun removeProduct(id: Long): Single<ResponseData<Boolean>> =
         apiService.removeProduct(id)
 
     /**

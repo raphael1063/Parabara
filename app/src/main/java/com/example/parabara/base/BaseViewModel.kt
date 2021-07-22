@@ -25,6 +25,9 @@ abstract class BaseViewModel : ViewModel() {
     private val _showToastInt = MutableLiveData<Event<Int>>()
     val showToastInt: LiveData<Event<Int>> = _showToastInt
 
+    private val _finishActivity = MutableLiveData<Event<Int>>()
+    val finishActivity: LiveData<Event<Int>> = _finishActivity
+
 
     protected val compositeDisposable = CompositeDisposable()
 
@@ -46,6 +49,10 @@ abstract class BaseViewModel : ViewModel() {
 
     fun showToast(message: Int) {
         _showToastInt.value = Event(message)
+    }
+
+    fun finishActivity(result: Int) {
+        _finishActivity.value = Event(result)
     }
 
     fun <T> ResponseData<T>.onResult(doOnSuccess: () -> Unit) {
