@@ -6,7 +6,7 @@ data class ProductApplyResult(
     /**
      * 상품 아이디
      */
-    val id: Int,
+    val id: Long,
 
     /**
      * 상품 제목
