@@ -28,7 +28,7 @@ class ProductActivity : BaseActivity<ActivityProductBinding>(R.layout.activity_p
     private val viewModel: ProductViewModel by viewModels()
 
     private val adapter by lazy {
-        ProductImageListAdapter(viewModel)
+        ProductEditImageListAdapter(viewModel)
     }
 
     private val getImagesLauncher =
@@ -67,6 +67,7 @@ class ProductActivity : BaseActivity<ActivityProductBinding>(R.layout.activity_p
             vm = viewModel
             rvProductImageList.adapter = adapter
         }
+        viewModel.loadData(intent.getLongExtra("ProductId", -1))
     }
 
     override fun observe() {

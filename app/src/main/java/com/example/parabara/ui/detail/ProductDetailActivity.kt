@@ -11,10 +11,23 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(R.layou
 
     private val viewModel: ProductDetailViewModel by viewModels()
 
+    private val adapter by lazy {
+        ProductDetailImageListAdapter()
+    }
+
     override fun start() {
-        binding.vm = viewModel
+        with(binding) {
+            vm = viewModel
+            rvDetailImageList.adapter = adapter
+        }
+        viewModel.loadData(intent.getLongExtra("ProductId", -1))
     }
 
     override fun observe() {
+        with(viewModel) {
+            productImageList.observe(this@ProductDetailActivity, {
+                adapter.submitList(it)
+            })
+        }
     }
 }

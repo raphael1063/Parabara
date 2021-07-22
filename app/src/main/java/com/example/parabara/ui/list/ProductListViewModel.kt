@@ -18,6 +18,9 @@ class ProductListViewModel @Inject constructor(private val repository: Repositor
     private val _list = MutableLiveData<List<Row>?>()
     val list: LiveData<List<Row>?> = _list
 
+    private val _actionProductItemClicked = MutableLiveData<Event<Long>>()
+    val actionProductItemClicked: LiveData<Event<Long>> = _actionProductItemClicked
+
     private val _actionApplyButtonClicked = MutableLiveData<Event<Unit>>()
     val actionApplyButtonClicked: LiveData<Event<Unit>> = _actionApplyButtonClicked
 
@@ -43,6 +46,10 @@ class ProductListViewModel @Inject constructor(private val repository: Repositor
 
     fun refresh() {
         getList()
+    }
+
+    fun onProductItemClicked(id: Long) {
+        _actionProductItemClicked.value = Event(id)
     }
 
     fun onApplyButtonClicked() {

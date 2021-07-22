@@ -29,13 +29,17 @@ class ProductViewModel @Inject constructor(private val repository: Repository) :
 
     val productContent = MutableLiveData<String>()
 
-    private val imageList = mutableListOf<ImageUploadResult>()
+    private var imageList = mutableListOf<ImageUploadResult>()
 
     private val _actionImageChooserClicked = MutableLiveData<Event<Int>>()
     val actionImageChooserClicked: LiveData<Event<Int>> = _actionImageChooserClicked
 
     private val _finishActivity = MutableLiveData<Event<Int>>()
     val finishActivity: LiveData<Event<Int>> = _finishActivity
+
+    fun loadData(id: Long) {
+
+    }
 
     private fun uploadImages(image: MultipartBody.Part) {
         repository.uploadImage(image)

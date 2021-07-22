@@ -41,6 +41,13 @@ class ProductListActivity :
             list.observe(this@ProductListActivity, { list ->
                 adapter.submitList(list)
             })
+            actionProductItemClicked.observe(this@ProductListActivity, { event ->
+                event.getContentIfNotHandled()?.let { id ->
+                    productDetailLauncher.launch(Intent(this@ProductListActivity, ProductActivity::class.java).apply {
+                        putExtra("ProductId", id)
+                    })
+                }
+            })
             actionApplyButtonClicked.observe(this@ProductListActivity, { event ->
                 event.getContentIfNotHandled()?.let {
                     productDetailLauncher.launch(Intent(this@ProductListActivity, ProductActivity::class.java))

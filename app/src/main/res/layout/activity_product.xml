@@ -65,7 +65,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_product_image_list"
                     android:layout_width="@dimen/dimen_0dp"
-                    tools:listitem="@layout/item_product_image"
+                    tools:listitem="@layout/item_product_edit_image"
                     android:layout_height="@dimen/dimen_0dp"
                     android:layout_marginHorizontal="@dimen/dimen_4dp"
                     android:orientation="horizontal"
