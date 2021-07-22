@@ -29,19 +29,11 @@ class ProductListViewModel @Inject constructor(private val repository: Repositor
         repository.getProductList(page, size)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ response ->
-                when (response.status) {
-                    STATUS_SUCCESS -> {
-                        response.data?.let {
-                            _list.value = it.rows
-                        } ?: run {
-                            showToast(R.string.empty_list_message)
-                        }
-                    }
-                    STATUS_INVALID -> {
-
-                    }
-                    STATUS_SERVER_ERROR -> {
-
+                response.onResult {
+                    response.data?.let {
+                        _list.value = it.rows
+                    } ?: run {
+                        showToast(R.string.empty_list_message)
                     }
                 }
             }, {
