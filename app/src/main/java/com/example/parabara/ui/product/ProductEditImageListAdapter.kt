@@ -11,7 +11,7 @@ import com.example.parabara.data.entities.ImageUploadResult
 import com.example.parabara.databinding.ItemProductEditImageBinding
 
 class ProductEditImageListAdapter(private val viewModel: ProductViewModel) :
-    ListAdapter<ImageUploadResult, ProductEditImageListAdapter.ViewHolder>(ITEM_COMPARATOR) {
+    ListAdapter<String, ProductEditImageListAdapter.ViewHolder>(ITEM_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(
@@ -24,7 +24,7 @@ class ProductEditImageListAdapter(private val viewModel: ProductViewModel) :
         )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) =
-        holder.bind(currentList[position].url, viewModel)
+        holder.bind(currentList[position], viewModel)
 
     class ViewHolder(private val binding: ItemProductEditImageBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -39,13 +39,13 @@ class ProductEditImageListAdapter(private val viewModel: ProductViewModel) :
     }
 
     companion object {
-        private val ITEM_COMPARATOR = object : DiffUtil.ItemCallback<ImageUploadResult>() {
+        private val ITEM_COMPARATOR = object : DiffUtil.ItemCallback<String>() {
 
-            override fun areItemsTheSame(oldItem: ImageUploadResult, newItem: ImageUploadResult): Boolean {
-                return oldItem.id == newItem.id
+            override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
+                return oldItem == newItem
             }
 
-            override fun areContentsTheSame(oldItem: ImageUploadResult, newItem: ImageUploadResult): Boolean {
+            override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
                 return oldItem == newItem
             }
         }

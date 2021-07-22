@@ -11,6 +11,7 @@ import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.example.parabara.R
 import com.example.parabara.base.BaseActivity
+import com.example.parabara.data.entities.ProductDetailResult
 import com.example.parabara.databinding.ActivityProductBinding
 import com.example.parabara.ext.toast
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,14 +40,15 @@ class ProductActivity : BaseActivity<ActivityProductBinding>(R.layout.activity_p
                     it.asMultipart("image", contentResolver)?.let { multipart ->
                         imageList.add(multipart)
                     }
-                viewModel.uploadImage(imageList)
+                    viewModel.uploadImage(imageList)
 
                 }
                 result.data?.clipData?.let { clipData ->
                     for (i in 0 until clipData.itemCount) {
-                        clipData.getItemAt(i).uri.asMultipart("image", contentResolver)?.let { multipart ->
-                            imageList.add(multipart)
-                        }
+                        clipData.getItemAt(i).uri.asMultipart("image", contentResolver)
+                            ?.let { multipart ->
+                                imageList.add(multipart)
+                            }
                     }
                     viewModel.uploadImage(imageList)
                 }
@@ -67,7 +69,9 @@ class ProductActivity : BaseActivity<ActivityProductBinding>(R.layout.activity_p
             vm = viewModel
             rvProductImageList.adapter = adapter
         }
-        viewModel.loadData(intent.getLongExtra("ProductId", -1))
+        intent.getParcelableExtra<ProductDetailResult>("ProductInfo")?.let {
+            viewModel.loadData(it)
+        }
     }
 
     override fun observe() {
@@ -84,7 +88,12 @@ class ProductActivity : BaseActivity<ActivityProductBinding>(R.layout.activity_p
                                 putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
                                 action = Intent.ACTION_GET_CONTENT
                             }
-                            getImagesLauncher.launch(Intent.createChooser(intent, "최대 ${maxSelectable}장 선택 가능"))
+                            getImagesLauncher.launch(
+                                Intent.createChooser(
+                                    intent,
+                                    "최대 ${maxSelectable}장 선택 가능"
+                                )
+                            )
                         }
                         else -> {
                             //권한 요청

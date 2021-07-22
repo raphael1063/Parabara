@@ -130,6 +130,7 @@
             android:id="@+id/tv_detail_edit_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            onSafeClick="@{() -> vm.onEditButtonClicked(vm.productInfo)}"
             android:layout_margin="4dp"
             android:background="@drawable/bg_button"
             android:gravity="center"

@@ -8,7 +8,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class RepositoryImpl @Inject constructor(private val apiService: ApiService): Repository {
+class RepositoryImpl @Inject constructor(private val apiService: ApiService) : Repository {
 
     /**
      * 이미지 업로드
@@ -26,7 +26,7 @@ class RepositoryImpl @Inject constructor(private val apiService: ApiService): Re
      * 상품 업데이트
      */
     override fun updateProduct(model: ProductUpdateRequest): Single<ResponseData<ProductUpdateResult>> =
-        apiService.updateProduct(model)
+        apiService.updateProduct(model.id, model.title, model.price, model.content)
 
     /**
      * 상품 삭제

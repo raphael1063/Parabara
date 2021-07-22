@@ -10,6 +10,8 @@ import com.example.parabara.base.*
 import com.example.parabara.data.Repository
 import com.example.parabara.data.entities.ImageUploadResult
 import com.example.parabara.data.entities.ProductApplyRequest
+import com.example.parabara.data.entities.ProductDetailResult
+import com.example.parabara.data.entities.ProductUpdateRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
@@ -20,8 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ProductViewModel @Inject constructor(private val repository: Repository) : BaseViewModel() {
 
-    private val _productImageList = MutableLiveData<List<ImageUploadResult>>()
-    val productImageList: LiveData<List<ImageUploadResult>> = _productImageList
+    private val _productImageList = MutableLiveData<List<String>>()
+    val productImageList: LiveData<List<String>> = _productImageList
 
     val productTitle = MutableLiveData<String>()
 
@@ -37,8 +39,20 @@ class ProductViewModel @Inject constructor(private val repository: Repository) :
     private val _finishActivity = MutableLiveData<Event<Int>>()
     val finishActivity: LiveData<Event<Int>> = _finishActivity
 
-    fun loadData(id: Long) {
+    private val _mode = MutableLiveData(Mode.APPLY)
+    val mode: LiveData<Mode> = _mode
 
+    private var currentId = -1L
+
+    fun loadData(productInfo: ProductDetailResult) {
+        productInfo.also {
+            currentId = it.id
+            productTitle.value = it.title
+            productPrice.value = it.price.toString()
+            productContent.value = it.content
+            _productImageList.value = it.images
+        }
+        _mode.value = Mode.EDIT
     }
 
     private fun uploadImages(image: MultipartBody.Part) {
@@ -48,7 +62,7 @@ class ProductViewModel @Inject constructor(private val repository: Repository) :
                 response.onResult {
                     response.data?.let { result ->
                         imageList.add(result)
-                        _productImageList.value = imageList.map { it.copy() }
+                        _productImageList.value = imageList.map { it.copy().url }
                     }
                 }
             }, {
@@ -59,7 +73,19 @@ class ProductViewModel @Inject constructor(private val repository: Repository) :
 
     fun removeImage(position: Int) {
         imageList.removeAt(position)
-        _productImageList.value = imageList.map { it.copy() }
+        _productImageList.value = imageList.map { it.copy().url }
+    }
+
+    private fun updateProduct(productUpdateRequest: ProductUpdateRequest) {
+        repository.updateProduct(productUpdateRequest)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ response ->
+                response.onResult {
+                    _finishActivity.value = Event(RESULT_OK)
+                }
+            }, {
+                _finishActivity.value = Event(RESULT_CANCELED)
+            }).addTo(compositeDisposable)
     }
 
     private fun applyProduct(productApplyRequest: ProductApplyRequest) {
@@ -70,7 +96,7 @@ class ProductViewModel @Inject constructor(private val repository: Repository) :
                     _finishActivity.value = Event(RESULT_OK)
                 }
             }, {
-                    _finishActivity.value = Event(RESULT_CANCELED)
+                _finishActivity.value = Event(RESULT_CANCELED)
             }).addTo(compositeDisposable)
     }
 
@@ -82,7 +108,7 @@ class ProductViewModel @Inject constructor(private val repository: Repository) :
     }
 
     //제품 등록 or 제품 수정 버튼 클릭
-    fun onApplyButtonClicked() {
+    fun onApplyEditButtonClicked() {
         var title = ""
         var price = 0L
         var content = ""
@@ -108,7 +134,11 @@ class ProductViewModel @Inject constructor(private val repository: Repository) :
         productImageList.value?.let {
             imageList = this.imageList.map { it.id }
         }
-        applyProduct(ProductApplyRequest(title, content, price, imageList))
+        if (_mode.value == Mode.APPLY) {
+            applyProduct(ProductApplyRequest(title, content, price, imageList))
+        } else {
+            updateProduct(ProductUpdateRequest(currentId, title, content, price))
+        }
     }
 
     fun uploadImage(multipartList: MutableList<MultipartBody.Part>) {
@@ -121,5 +151,9 @@ class ProductViewModel @Inject constructor(private val repository: Repository) :
                 uploadImages(multipartList[i])
             }
         }
+    }
+
+    enum class Mode {
+        APPLY, EDIT
     }
 }

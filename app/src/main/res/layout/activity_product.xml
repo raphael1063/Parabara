@@ -5,6 +5,10 @@
 
     <data>
 
+        <import type="android.view.View" />
+
+        <import type="com.example.parabara.ui.product.ProductViewModel.Mode" />
+
         <variable
             name="vm"
             type="com.example.parabara.ui.product.ProductViewModel" />
@@ -43,59 +47,65 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{vm.productImageList.size() + `/10`}"
-                    tools:text="0/10"
                     android:textColor="@color/grey"
                     android:textSize="@dimen/dimen_16dp"
                     app:layout_constraintBottom_toBottomOf="@+id/view_product_image_chooser"
                     app:layout_constraintEnd_toEndOf="@+id/view_product_image_chooser"
                     app:layout_constraintStart_toStartOf="@+id/view_product_image_chooser"
-                    app:layout_constraintTop_toBottomOf="@+id/iv_product_camera" />
+                    app:layout_constraintTop_toBottomOf="@+id/iv_product_camera"
+                    tools:text="0/10" />
 
                 <View
                     android:id="@+id/view_product_image_chooser"
+                    onSafeClick="@{() -> vm.onImageChooserClicked()}"
                     android:layout_width="@dimen/dimen_100dp"
                     android:layout_height="@dimen/dimen_100dp"
                     android:layout_marginStart="@dimen/dimen_8dp"
                     android:layout_marginTop="@dimen/dimen_8dp"
-                    onSafeClick="@{() -> vm.onImageChooserClicked()}"
                     android:background="@drawable/bg_button"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <androidx.constraintlayout.widget.Group
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="@{vm.mode==Mode.APPLY ? View.VISIBLE : View.GONE}"
+                    app:constraint_referenced_ids="iv_product_camera, tv_product_image_count, view_product_image_chooser" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_product_image_list"
                     android:layout_width="@dimen/dimen_0dp"
-                    tools:listitem="@layout/item_product_edit_image"
-                    android:layout_height="@dimen/dimen_0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dimen_4dp"
                     android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/dimen_8dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintBottom_toBottomOf="@id/view_product_image_chooser"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/view_product_image_chooser"
-                    app:layout_constraintTop_toTopOf="@id/view_product_image_chooser" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:listitem="@layout/item_product_edit_image" />
 
                 <EditText
                     android:id="@+id/et_product_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
                     android:layout_marginHorizontal="@dimen/dimen_8dp"
-                    android:layout_marginTop="@dimen/dimen_12dp"
-                    android:text="@={vm.productTitle}"
                     android:hint="상품명"
+                    android:text="@={vm.productTitle}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view_product_image_chooser" />
+                    app:layout_constraintTop_toBottomOf="@+id/rv_product_image_list" />
 
                 <EditText
                     android:id="@+id/et_product_price"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dimen_8dp"
-                    android:text="@={vm.productPrice}"
                     android:layout_marginTop="@dimen/dimen_12dp"
                     android:hint="판매가격"
                     android:inputType="number"
+                    android:text="@={vm.productPrice}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/et_product_title" />
@@ -106,13 +116,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dimen_8dp"
                     android:layout_marginTop="@dimen/dimen_12dp"
-                    android:text="@={vm.productContent}"
                     android:background="@drawable/bg_edit_text"
                     android:gravity="top"
                     android:hint="상품설명을 작성해 주세요.\n\n브랜드, 사이즈, 사용감 등 자세히 작성해 주시면\n보다 빠르고 편한 거래를 하실 수 있으실 거에요:)"
                     android:inputType="textMultiLine"
                     android:minHeight="300dp"
                     android:padding="@dimen/dimen_12dp"
+                    android:text="@={vm.productContent}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -124,18 +134,19 @@
 
         <TextView
             android:id="@+id/tv_product_apply_button"
+            onSafeClick="@{() -> vm.onApplyEditButtonClicked()}"
             android:layout_width="@dimen/dimen_0dp"
             android:layout_height="wrap_content"
             android:background="@color/teal_200"
             android:gravity="center"
-            onSafeClick="@{() -> vm.onApplyButtonClicked()}"
             android:paddingVertical="@dimen/dimen_16dp"
-            android:text="상품등록"
+            android:text="@{vm.mode==Mode.APPLY ? `상품등록` : `수정완료`}"
             android:textColor="@color/white"
             android:textSize="@dimen/dimen_18dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="상품등록" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,7 @@ package com.example.parabara.ui.detail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.parabara.Event
 import com.example.parabara.base.BaseViewModel
 import com.example.parabara.data.Repository
 import com.example.parabara.data.entities.ProductDetailResult
@@ -18,6 +19,9 @@ class ProductDetailViewModel @Inject constructor(private val repository: Reposit
 
     private val _productInfo = MutableLiveData<ProductDetailResult>()
     val productInfo: LiveData<ProductDetailResult> = _productInfo
+
+    private val _actionEditButtonClicked = MutableLiveData<Event<ProductDetailResult>>()
+    val actionEditButtonClicked: LiveData<Event<ProductDetailResult>> = _actionEditButtonClicked
 
     private var currentId: Long = 0L
 
@@ -39,6 +43,14 @@ class ProductDetailViewModel @Inject constructor(private val repository: Reposit
             }, {
 
             }).addTo(compositeDisposable)
+    }
+
+    fun refresh() {
+        getProductDetail(currentId)
+    }
+
+    fun onEditButtonClicked(productInfo: ProductDetailResult) {
+        _actionEditButtonClicked.value = Event(productInfo)
     }
 
 }

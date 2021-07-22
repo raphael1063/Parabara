@@ -5,6 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
+        <import type="com.example.parabara.ui.product.ProductViewModel.Mode"/>
 
         <variable
             name="position"
@@ -37,6 +39,7 @@
 
         <ImageView
             onSafeClick="@{() -> vm.removeImage(position)}"
+            android:visibility="@{vm.mode == Mode.APPLY ? View.VISIBLE : View.GONE}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/dimen_6dp"

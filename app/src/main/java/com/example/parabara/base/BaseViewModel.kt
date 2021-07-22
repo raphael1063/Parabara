@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.parabara.Event
 import com.example.parabara.data.entities.ResponseData
 import io.reactivex.disposables.CompositeDisposable
+import timber.log.Timber
 
 abstract class BaseViewModel : ViewModel() {
 
@@ -40,8 +41,9 @@ abstract class BaseViewModel : ViewModel() {
     fun <T> ResponseData<T>.onResult(doOnSuccess: () -> Unit) {
         when (this.status) {
             STATUS_SUCCESS -> doOnSuccess()
-            STATUS_INVALID -> showToast(this.message)
-            STATUS_SERVER_ERROR -> showToast(this.message)
+            STATUS_INVALID -> Timber.d("STATUS_INVALID : ${this.status}")
+            STATUS_SERVER_ERROR -> Timber.d("STATUS_SERVER_ERROR : ${this.status}")
         }
+        showToast(this.message)
     }
 }

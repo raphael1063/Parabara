@@ -29,8 +29,14 @@ interface ApiService {
     /**
      * 상품 업데이트
      */
+    @FormUrlEncoded
     @PUT("/api/product")
-    fun updateProduct(@Body model: ProductUpdateRequest): Single<ResponseData<ProductUpdateResult>>
+    fun updateProduct(
+        @Field("id") id: Long,
+        @Field("title") title: String,
+        @Field("price") price: Long,
+        @Field("content") content: String
+    ): Single<ResponseData<ProductUpdateResult>>
 
     /**
      * 상품 삭제
