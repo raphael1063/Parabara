@@ -8,6 +8,7 @@ import com.example.parabara.base.BaseActivity
 import com.example.parabara.databinding.ActivityProductListBinding
 import com.example.parabara.ext.openActivity
 import com.example.parabara.ext.toast
+import com.example.parabara.ui.detail.ProductDetailActivity
 import com.example.parabara.ui.product.ProductActivity
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MultipartBody
@@ -43,7 +44,7 @@ class ProductListActivity :
             })
             actionProductItemClicked.observe(this@ProductListActivity, { event ->
                 event.getContentIfNotHandled()?.let { id ->
-                    productDetailLauncher.launch(Intent(this@ProductListActivity, ProductActivity::class.java).apply {
+                    productDetailLauncher.launch(Intent(this@ProductListActivity, ProductDetailActivity::class.java).apply {
                         putExtra("ProductId", id)
                     })
                 }

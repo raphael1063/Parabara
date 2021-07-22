@@ -33,9 +33,9 @@ class ProductDetailViewModel @Inject constructor(private val repository: Reposit
                 response.onResult {
                     response.data?.let {
                         _productInfo.value = it
+                        _productImageList.value = it.images
                     }
                 }
-
             }, {
 
             }).addTo(compositeDisposable)

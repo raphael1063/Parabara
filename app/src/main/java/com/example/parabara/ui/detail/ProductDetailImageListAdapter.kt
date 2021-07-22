@@ -7,8 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.parabara.R
-import com.example.parabara.data.entities.ImageUploadResult
-import com.example.parabara.databinding.ItemProductEditImageBinding
+import com.example.parabara.databinding.ItemProductDetailImageBinding
 
 class ProductDetailImageListAdapter :
     ListAdapter<String, ProductDetailImageListAdapter.ViewHolder>(ITEM_COMPARATOR) {
@@ -17,7 +16,7 @@ class ProductDetailImageListAdapter :
         ViewHolder(
             DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
-                R.layout.item_product_edit_image,
+                R.layout.item_product_detail_image,
                 parent,
                 false
             )
@@ -26,7 +25,7 @@ class ProductDetailImageListAdapter :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) =
         holder.bind(currentList[position])
 
-    class ViewHolder(private val binding: ItemProductEditImageBinding) :
+    class ViewHolder(private val binding: ItemProductDetailImageBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(imageUrl: String) {
