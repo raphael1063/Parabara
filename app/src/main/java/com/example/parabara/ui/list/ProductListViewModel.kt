@@ -13,7 +13,8 @@ import io.reactivex.rxkotlin.addTo
 import javax.inject.Inject
 
 @HiltViewModel
-class ProductListViewModel @Inject constructor(private val repository: Repository) : BaseViewModel() {
+class ProductListViewModel @Inject constructor(private val repository: Repository) :
+    BaseViewModel() {
 
     private val _list = MutableLiveData<List<Row>?>()
     val list: LiveData<List<Row>?> = _list
@@ -24,13 +25,26 @@ class ProductListViewModel @Inject constructor(private val repository: Repositor
     private val _actionApplyButtonClicked = MutableLiveData<Event<Unit>>()
     val actionApplyButtonClicked: LiveData<Event<Unit>> = _actionApplyButtonClicked
 
+
     init {
-        getList()
+        getList(false)
     }
 
-    private fun getList() {
+    private fun getList(isRefresh: Boolean) {
         repository.getProductList(page, size)
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe {
+                if (!isRefresh) {
+                    showLoading(true)
+                }
+            }
+            .doFinally {
+                if (isRefresh) {
+                    hideRefreshing()
+                } else {
+                    showLoading(false)
+                }
+            }
             .subscribe({ response ->
                 response.onResult {
                     response.data?.let { data ->
@@ -45,7 +59,7 @@ class ProductListViewModel @Inject constructor(private val repository: Repositor
     }
 
     fun refresh() {
-        getList()
+        getList(true)
     }
 
     fun onProductItemClicked(id: Long) {

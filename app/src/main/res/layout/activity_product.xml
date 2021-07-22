@@ -77,8 +77,8 @@
                     android:layout_width="@dimen/dimen_0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dimen_4dp"
-                    android:orientation="horizontal"
                     android:layout_marginTop="@dimen/dimen_8dp"
+                    android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/view_product_image_chooser"
@@ -89,8 +89,8 @@
                     android:id="@+id/et_product_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
                     android:layout_marginHorizontal="@dimen/dimen_8dp"
+                    android:layout_marginTop="12dp"
                     android:hint="상품명"
                     android:text="@={vm.productTitle}"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -147,6 +147,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="상품등록" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loading_product"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{vm.loading ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/loading" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

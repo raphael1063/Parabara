@@ -23,6 +23,9 @@ class ProductDetailViewModel @Inject constructor(private val repository: Reposit
     private val _actionEditButtonClicked = MutableLiveData<Event<ProductDetailResult>>()
     val actionEditButtonClicked: LiveData<Event<ProductDetailResult>> = _actionEditButtonClicked
 
+    private val _actionRemoveButtonClicked = MutableLiveData<Event<Long>>()
+    val actionRemoveButtonClicked: LiveData<Event<Long>> = _actionRemoveButtonClicked
+
     private var currentId: Long = 0L
 
     fun loadData(id: Long) {
@@ -33,6 +36,8 @@ class ProductDetailViewModel @Inject constructor(private val repository: Reposit
     private fun getProductDetail(id: Long) {
         repository.getProductDetail(id)
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { showLoading(true) }
+            .doFinally { showLoading(false) }
             .subscribe({ response ->
                 response.onResult {
                     response.data?.let {
@@ -51,6 +56,10 @@ class ProductDetailViewModel @Inject constructor(private val repository: Reposit
 
     fun onEditButtonClicked(productInfo: ProductDetailResult) {
         _actionEditButtonClicked.value = Event(productInfo)
+    }
+
+    fun onRemoveButtonClicked(id: Long) {
+        _actionRemoveButtonClicked.value = Event(id)
     }
 
 }

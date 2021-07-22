@@ -79,6 +79,8 @@ class ProductViewModel @Inject constructor(private val repository: Repository) :
     private fun updateProduct(productUpdateRequest: ProductUpdateRequest) {
         repository.updateProduct(productUpdateRequest)
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { showLoading(true) }
+            .doFinally { showLoading(false) }
             .subscribe({ response ->
                 response.onResult {
                     _finishActivity.value = Event(RESULT_OK)
@@ -91,6 +93,8 @@ class ProductViewModel @Inject constructor(private val repository: Repository) :
     private fun applyProduct(productApplyRequest: ProductApplyRequest) {
         repository.applyProduct(productApplyRequest)
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { showLoading(true) }
+            .doFinally { showLoading(false) }
             .subscribe({ response ->
                 response.onResult {
                     _finishActivity.value = Event(RESULT_OK)

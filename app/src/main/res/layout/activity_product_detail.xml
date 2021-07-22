@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
 
         <variable
             name="vm"
@@ -119,6 +120,7 @@
             android:background="@drawable/bg_button"
             android:gravity="center"
             android:paddingVertical="12dp"
+            onSafeClick="@{() -> vm.onRemoveButtonClicked(vm.productInfo.id)}"
             android:text="삭제"
             android:textColor="@color/black"
             android:textSize="@dimen/dimen_14dp"
@@ -141,6 +143,19 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_detail_remove_button" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loading_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{vm.loading ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/loading" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

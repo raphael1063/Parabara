@@ -10,6 +10,12 @@ import timber.log.Timber
 
 abstract class BaseViewModel : ViewModel() {
 
+    private val _loading = MutableLiveData<Boolean>()
+    val loading: LiveData<Boolean> = _loading
+
+    private val _hideRefreshing = MutableLiveData<Unit>()
+    val hideRefreshing: LiveData<Unit> = _hideRefreshing
+
     private val _showServerErrorMessage = MutableLiveData<Event<Int>>()
     val showServerErrorMessage: LiveData<Event<Int>> = _showServerErrorMessage
 
@@ -26,8 +32,12 @@ abstract class BaseViewModel : ViewModel() {
         compositeDisposable.dispose()
     }
 
-    private fun showServerErrorMessage() {
+    fun showLoading(isLoading: Boolean) {
+        _loading.value = isLoading
+    }
 
+    fun hideRefreshing() {
+        _hideRefreshing.value = Unit
     }
 
     fun showToast(message: String) {

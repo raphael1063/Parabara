@@ -42,6 +42,9 @@ class ProductListActivity :
             list.observe(this@ProductListActivity, { list ->
                 adapter.submitList(list)
             })
+            hideRefreshing.observe(this@ProductListActivity, {
+                binding.srlList.isRefreshing = false
+            })
             actionProductItemClicked.observe(this@ProductListActivity, { event ->
                 event.getContentIfNotHandled()?.let { id ->
                     productDetailLauncher.launch(Intent(this@ProductListActivity, ProductDetailActivity::class.java).apply {
