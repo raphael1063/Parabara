@@ -1,5 +1,7 @@
 package com.example.parabara.ui.list
 
+import android.content.Intent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import com.example.parabara.R
 import com.example.parabara.base.BaseActivity
@@ -8,6 +10,7 @@ import com.example.parabara.ext.openActivity
 import com.example.parabara.ext.toast
 import com.example.parabara.ui.product.ProductActivity
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.MultipartBody
 
 @AndroidEntryPoint
 class ProductListActivity :
@@ -18,6 +21,13 @@ class ProductListActivity :
     private val adapter by lazy {
         ProductListAdapter(viewModel)
     }
+
+    private val productDetailLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                viewModel.refresh()
+            }
+        }
 
     override fun start() {
         with(binding) {
@@ -34,6 +44,7 @@ class ProductListActivity :
             actionApplyButtonClicked.observe(this@ProductListActivity, { event ->
                 event.getContentIfNotHandled()?.let {
                     openActivity(ProductActivity::class.java)
+                    productDetailLauncher.launch(Intent())
                 }
             })
             showToastInt.observe(this@ProductListActivity, { event ->

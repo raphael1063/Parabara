@@ -5,8 +5,6 @@ import android.content.ContentResolver
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.provider.DocumentsContract
-import android.provider.MediaStore
 import android.provider.OpenableColumns
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -14,6 +12,7 @@ import androidx.core.content.ContextCompat
 import com.example.parabara.R
 import com.example.parabara.base.BaseActivity
 import com.example.parabara.databinding.ActivityProductBinding
+import com.example.parabara.ext.toast
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
@@ -95,6 +94,12 @@ class ProductActivity : BaseActivity<ActivityProductBinding>(R.layout.activity_p
             })
             productImageList.observe(this@ProductActivity, {
                 adapter.submitList(it)
+            })
+            showToastInt.observe(this@ProductActivity, { event ->
+                event.getContentIfNotHandled()?.let {
+                    toast(it)
+                }
+
             })
             finishActivity.observe(this@ProductActivity, { event ->
                 event.getContentIfNotHandled()?.let {

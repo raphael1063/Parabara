@@ -31,6 +31,7 @@ class ProductImageListAdapter(private val viewModel: ProductViewModel) :
 
         fun bind(imageUrl: String, viewModel: ProductViewModel) {
             with(binding) {
+                position = adapterPosition
                 this.imageUrl = imageUrl
                 vm = viewModel
             }

@@ -51,6 +51,11 @@ class ProductViewModel @Inject constructor(private val repository: Repository) :
             }).addTo(compositeDisposable)
     }
 
+    fun removeImage(position: Int) {
+        imageList.removeAt(position)
+        _productImageList.value = imageList.map { it.copy() }
+    }
+
     private fun applyProduct(productApplyRequest: ProductApplyRequest) {
         repository.applyProduct(productApplyRequest)
             .observeOn(AndroidSchedulers.mainThread())
@@ -59,7 +64,7 @@ class ProductViewModel @Inject constructor(private val repository: Repository) :
                     _finishActivity.value = Event(Unit)
                 }
             }, {
-
+                    _finishActivity.value = Event(Unit)
             }).addTo(compositeDisposable)
     }
 
@@ -80,17 +85,22 @@ class ProductViewModel @Inject constructor(private val repository: Repository) :
             title = it
         } ?: run {
             showToast(R.string.no_title_message)
+            return
         }
         productPrice.value?.let {
             price = it.toLong()
         } ?: run {
             showToast(R.string.no_price_message)
+            return
         }
         productContent.value?.let {
             content = it
+        } ?: run {
+            showToast(R.string.no_content_message)
+            return
         }
         productImageList.value?.let {
-
+            imageList = this.imageList.map { it.id }
         }
         applyProduct(ProductApplyRequest(title, content, price, imageList))
     }

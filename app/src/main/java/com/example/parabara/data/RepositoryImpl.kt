@@ -20,7 +20,7 @@ class RepositoryImpl @Inject constructor(private val apiService: ApiService): Re
      * 상품 등록
      */
     override fun applyProduct(model: ProductApplyRequest): Single<ResponseData<ProductApplyResult>> =
-        apiService.applyProduct(model)
+        apiService.applyProduct(model.title, model.price, model.content, model.images)
 
     /**
      * 상품 업데이트

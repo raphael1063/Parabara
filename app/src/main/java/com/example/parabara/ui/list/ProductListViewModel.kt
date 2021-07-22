@@ -41,6 +41,10 @@ class ProductListViewModel @Inject constructor(private val repository: Repositor
             }).addTo(compositeDisposable)
     }
 
+    fun refresh() {
+        getList()
+    }
+
     fun onApplyButtonClicked() {
         _actionApplyButtonClicked.value = Event(Unit)
     }

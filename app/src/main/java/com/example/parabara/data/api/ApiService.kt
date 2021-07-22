@@ -18,7 +18,12 @@ interface ApiService {
      * 상품 등록
      */
     @POST("/api/product")
-    fun applyProduct(@Body model: ProductApplyRequest): Single<ResponseData<ProductApplyResult>>
+    fun applyProduct(
+        @Query("title") title: String,
+        @Query("price") price: Long,
+        @Query("content") content: String,
+        @Query("images") images: List<Long>?
+    ): Single<ResponseData<ProductApplyResult>>
 
     /**
      * 상품 업데이트

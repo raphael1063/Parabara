@@ -6,7 +6,7 @@ data class ImageUploadResult(
     /**
      * 이미지 아이디
      */
-    val id: Int,
+    val id: Long,
 
     /**
      * 이미지 경로
