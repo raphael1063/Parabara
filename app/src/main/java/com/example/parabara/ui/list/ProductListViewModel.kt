@@ -16,6 +16,7 @@ import javax.inject.Inject
 class ProductListViewModel @Inject constructor(private val repository: Repository) :
     BaseViewModel() {
 
+    //총 아이템 갯수
     private val _totalRecords = MutableLiveData<Int>()
     val totalRecords: LiveData<Int> = _totalRecords
 

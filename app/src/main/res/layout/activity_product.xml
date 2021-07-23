@@ -60,6 +60,7 @@
                     android:id="@+id/view_product_image_chooser"
                     onSafeClick="@{() -> vm.onImageChooserClicked()}"
                     android:layout_width="@dimen/dimen_100dp"
+                    app:layout_goneMarginTop="@dimen/dimen_100dp"
                     android:layout_height="@dimen/dimen_100dp"
                     android:layout_marginStart="@dimen/dimen_8dp"
                     android:layout_marginTop="@dimen/dimen_8dp"
@@ -89,15 +90,15 @@
                 <EditText
                     android:id="@+id/et_product_title"
                     android:layout_width="0dp"
+                    android:layout_marginTop="@dimen/dimen_12dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dimen_8dp"
-                    android:layout_marginTop="12dp"
                     android:hint="@string/product_title"
                     android:inputType="text"
                     android:text="@={vm.productTitle}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rv_product_image_list" />
+                    app:layout_constraintTop_toBottomOf="@+id/view_product_image_chooser" />
 
                 <EditText
                     android:id="@+id/et_product_price"

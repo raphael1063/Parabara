@@ -67,6 +67,7 @@ class ProductDetailViewModel @Inject constructor(private val repository: Reposit
         getProductDetail(currentId)
     }
 
+    //
     fun onDeleteButtonClicked() {
         removeProduct(currentId)
     }

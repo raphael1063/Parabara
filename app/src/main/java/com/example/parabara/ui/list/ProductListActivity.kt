@@ -1,3 +1,6 @@
+/*
+상품 리스트
+ */
 package com.example.parabara.ui.list
 
 import android.content.Intent
@@ -9,13 +12,11 @@ import com.example.parabara.R
 import com.example.parabara.base.BaseActivity
 import com.example.parabara.base.PRODUCT_ID
 import com.example.parabara.databinding.ActivityProductListBinding
-import com.example.parabara.ext.openActivity
 import com.example.parabara.ext.toast
 import com.example.parabara.ui.detail.ProductDetailActivity
 import com.example.parabara.ui.product.ProductActivity
 import com.example.parabara.util.EndlessRecyclerViewScrollListener
 import dagger.hilt.android.AndroidEntryPoint
-import okhttp3.MultipartBody
 import timber.log.Timber
 
 @AndroidEntryPoint

@@ -1,12 +1,11 @@
 package com.example.parabara.util
 
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import timber.log.Timber
 
-abstract class EndlessRecyclerViewScrollListener : RecyclerView.OnScrollListener {
+abstract class EndlessRecyclerViewScrollListener(layoutManager: LinearLayoutManager) :
+    RecyclerView.OnScrollListener() {
 
     private var visibleThreshold = 15
 
@@ -17,11 +16,7 @@ abstract class EndlessRecyclerViewScrollListener : RecyclerView.OnScrollListener
     private var loading = true
 
     private val startingPageIndex = 1
-    var mLayoutManager: RecyclerView.LayoutManager
-
-    constructor(layoutManager: LinearLayoutManager) {
-        mLayoutManager = layoutManager
-    }
+    private var mLayoutManager: RecyclerView.LayoutManager = layoutManager
 
     private fun getLastVisibleItem(lastVisibleItemPositions: IntArray): Int {
         var maxSize = 0

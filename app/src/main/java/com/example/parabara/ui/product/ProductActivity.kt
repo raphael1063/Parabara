@@ -1,11 +1,11 @@
+/*
+상품 등록 또는 상품 수
+ */
 package com.example.parabara.ui.product
 
 import android.Manifest
-import android.content.ContentResolver
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
-import android.provider.OpenableColumns
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -17,12 +17,7 @@ import com.example.parabara.databinding.ActivityProductBinding
 import com.example.parabara.ext.asMultipart
 import com.example.parabara.ext.toast
 import dagger.hilt.android.AndroidEntryPoint
-import okhttp3.MediaType
-import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okio.BufferedSink
-import okio.source
 
 @AndroidEntryPoint
 class ProductActivity : BaseActivity<ActivityProductBinding>(R.layout.activity_product) {
@@ -42,7 +37,6 @@ class ProductActivity : BaseActivity<ActivityProductBinding>(R.layout.activity_p
                         imageList.add(multipart)
                     }
                     viewModel.uploadImage(imageList)
-
                 }
                 result.data?.clipData?.let { clipData ->
                     for (i in 0 until clipData.itemCount) {
@@ -61,7 +55,9 @@ class ProductActivity : BaseActivity<ActivityProductBinding>(R.layout.activity_p
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
             if (isGranted) {
+                viewModel.onImageChooserClicked()
             } else {
+                viewModel.showToast(R.string.no_permission_message)
             }
         }
 

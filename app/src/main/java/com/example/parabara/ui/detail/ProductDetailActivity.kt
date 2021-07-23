@@ -1,3 +1,6 @@
+/*
+상품 상세
+ */
 package com.example.parabara.ui.detail
 
 import android.content.Intent

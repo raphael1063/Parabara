@@ -2,18 +2,20 @@
     <string name="app_name">Parabara</string>
 
     <string name="empty_list_message">조회할 상품이 없습니다.</string>
-    <string name="network_error_message">네트워크 상태가 불안정합니다. 잠시 후 다시 시도해주세요.</string>
-    <string name="server_error_message">서버와의 통신이 원활하지 않습니다. 잠시 후 다시 시도해주세요.</string>
     <string name="image_upload_error_message">이미지 업로드에 실패했습니다. 잠시 후 다시 시도해주세요.</string>
     <string name="no_title_message">상품명을 입력해주세요.</string>
     <string name="no_price_message">판매가격을 입력해주세요.</string>
     <string name="no_content_message">상품설명을 작성해주세요.</string>
-    <string name="product_info_title">&lt; 상품정보 &gt;</string>
+    <string name="image_upload_limit_message">이미지는 최대 10개까지 등록 가능합니다.</string>
+    <string name="no_permission_message">접근 권한을 모두 허용해 주셔야 접근이 가능해요.</string>
+
     <string name="dialog_title_delete">삭제하시겠어요?</string>
+    <string name="product_info_title">&lt; 상품정보 &gt;</string>
     <string name="cancel">취소</string>
     <string name="edit">수정하기</string>
     <string name="delete">삭제</string>
     <string name="product_title">상품명</string>
     <string name="price">판매가격</string>
+
     <string name="product_content_hint">상품설명을 작성해 주세요.\n\n브랜드, 사이즈, 사용감 등 자세히 작성해 주시면\n보다 빠르고 편한 거래를 하실 수 있으실 거에요:)</string>
 </resources>

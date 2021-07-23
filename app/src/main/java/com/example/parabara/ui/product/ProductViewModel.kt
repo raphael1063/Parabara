@@ -22,25 +22,33 @@ import javax.inject.Inject
 @HiltViewModel
 class ProductViewModel @Inject constructor(private val repository: Repository) : BaseViewModel() {
 
+    //상품 이미지 리스트
     private val _productImageList = MutableLiveData<List<String>>()
     val productImageList: LiveData<List<String>> = _productImageList
 
-    val productTitle = MutableLiveData<String>()
-
-    val productPrice = MutableLiveData<String>()
-
-    val productContent = MutableLiveData<String>()
-
     private var imageList = mutableListOf<ImageUploadResult>()
 
+    //상품명
+    val productTitle = MutableLiveData<String>()
+
+    //판매가격
+    val productPrice = MutableLiveData<String>()
+
+    //상품 설명
+    val productContent = MutableLiveData<String>()
+
+    //이미지 선택버튼 클릭
     private val _actionImageChooserClicked = MutableLiveData<Event<Int>>()
     val actionImageChooserClicked: LiveData<Event<Int>> = _actionImageChooserClicked
 
+    //모드(Apply: 상품 등록, Edit: 상품 수정)
     private val _mode = MutableLiveData(Mode.APPLY)
     val mode: LiveData<Mode> = _mode
 
+    //현재 상품 ID (상품 수정 시에만 사용)
     private var currentId = -1L
 
+    //초기 데이터 호출
     fun loadData(productInfo: ProductDetailResult) {
         productInfo.also {
             currentId = it.id
@@ -52,6 +60,7 @@ class ProductViewModel @Inject constructor(private val repository: Repository) :
         _mode.value = Mode.EDIT
     }
 
+    //이미지 업로드 API
     private fun uploadImages(image: MultipartBody.Part) {
         repository.uploadImage(image)
             .observeOn(AndroidSchedulers.mainThread())
@@ -68,11 +77,7 @@ class ProductViewModel @Inject constructor(private val repository: Repository) :
             }).addTo(compositeDisposable)
     }
 
-    fun removeImage(position: Int) {
-        imageList.removeAt(position)
-        _productImageList.value = imageList.map { it.copy().url }
-    }
-
+    //상품 업데이트 API
     private fun updateProduct(productUpdateRequest: ProductUpdateRequest) {
         repository.updateProduct(productUpdateRequest)
             .observeOn(AndroidSchedulers.mainThread())
@@ -87,6 +92,7 @@ class ProductViewModel @Inject constructor(private val repository: Repository) :
             }).addTo(compositeDisposable)
     }
 
+    //상품 등록 API
     private fun applyProduct(productApplyRequest: ProductApplyRequest) {
         repository.applyProduct(productApplyRequest)
             .observeOn(AndroidSchedulers.mainThread())
@@ -99,6 +105,12 @@ class ProductViewModel @Inject constructor(private val repository: Repository) :
             }, {
                 finishActivity(RESULT_CANCELED)
             }).addTo(compositeDisposable)
+    }
+
+    //이미지 삭제
+    fun removeImage(position: Int) {
+        imageList.removeAt(position)
+        _productImageList.value = imageList.map { it.copy().url }
     }
 
     //이미지 선택 버튼 클릭
@@ -142,6 +154,7 @@ class ProductViewModel @Inject constructor(private val repository: Repository) :
         }
     }
 
+    //이미지 업로드
     fun uploadImage(multipartList: MutableList<MultipartBody.Part>) {
         if (imageList.size + multipartList.size <= 10) {
             for (i in multipartList.indices) {
@@ -149,6 +162,7 @@ class ProductViewModel @Inject constructor(private val repository: Repository) :
             }
         } else {
             for (i in 0 until 10 - imageList.size) {
+                showToast(R.string.image_upload_limit_message)
                 uploadImages(multipartList[i])
             }
         }

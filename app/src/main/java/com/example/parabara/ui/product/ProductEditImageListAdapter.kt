@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.parabara.R
-import com.example.parabara.data.entities.ImageUploadResult
 import com.example.parabara.databinding.ItemProductEditImageBinding
 
 class ProductEditImageListAdapter(private val viewModel: ProductViewModel) :
