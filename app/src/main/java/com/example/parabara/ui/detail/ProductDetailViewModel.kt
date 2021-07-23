@@ -34,6 +34,7 @@ class ProductDetailViewModel @Inject constructor(private val repository: Reposit
         getProductDetail(id)
     }
 
+    //상풍 상세 호출 API
     private fun getProductDetail(id: Long) {
         repository.getProductDetail(id)
             .observeOn(AndroidSchedulers.mainThread())
@@ -51,6 +52,7 @@ class ProductDetailViewModel @Inject constructor(private val repository: Reposit
             }).addTo(compositeDisposable)
     }
 
+    //상품 삭제 API
     private fun removeProduct(id: Long) {
         repository.removeProduct(id)
             .observeOn(AndroidSchedulers.mainThread())

@@ -12,6 +12,7 @@ import com.example.parabara.base.BaseActivity
 import com.example.parabara.base.PRODUCT_ID
 import com.example.parabara.base.PRODUCT_INFO
 import com.example.parabara.databinding.ActivityProductDetailBinding
+import com.example.parabara.ext.toast
 import com.example.parabara.ui.alert.AlertDialogFragment
 import com.example.parabara.ui.product.ProductActivity
 import com.example.parabara.util.CirclePagerIndicatorDecoration
@@ -54,6 +55,11 @@ class ProductDetailActivity :
                     productEditorLauncher.launch(Intent(this@ProductDetailActivity, ProductActivity::class.java).apply {
                         putExtra(PRODUCT_INFO, productInfo)
                     })
+                }
+            })
+            showToastInt.observe(this@ProductDetailActivity, { event ->
+                event.getContentIfNotHandled()?.let {
+                    toast(it)
                 }
             })
             actionRemoveButtonClicked.observe(this@ProductDetailActivity, { event ->

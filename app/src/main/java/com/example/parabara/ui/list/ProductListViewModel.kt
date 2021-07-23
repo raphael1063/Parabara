@@ -43,7 +43,7 @@ class ProductListViewModel @Inject constructor(private val repository: Repositor
         repository.getProductList(page, size)
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe {
-                if (!isRefresh) {
+                if (!isRefresh && !isLoadMore) {
                     showLoading(true)
                 }
             }

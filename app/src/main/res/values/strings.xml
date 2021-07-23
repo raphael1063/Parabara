@@ -8,6 +8,8 @@
     <string name="no_content_message">상품설명을 작성해주세요.</string>
     <string name="image_upload_limit_message">이미지는 최대 10개까지 등록 가능합니다.</string>
     <string name="no_permission_message">접근 권한을 모두 허용해 주셔야 접근이 가능해요.</string>
+    <string name="product_apply_success_message">상품 등록이 완료되었습니다.</string>
+    <string name="product_update_success_message">상품 업데이트가 완료되었습니다.</string>
 
     <string name="dialog_title_delete">삭제하시겠어요?</string>
     <string name="product_info_title">&lt; 상품정보 &gt;</string>

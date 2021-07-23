@@ -7,7 +7,7 @@ import timber.log.Timber
 abstract class EndlessRecyclerViewScrollListener(layoutManager: LinearLayoutManager) :
     RecyclerView.OnScrollListener() {
 
-    private var visibleThreshold = 15
+    private var visibleThreshold = 8
 
     private var currentPage = 1
 
@@ -52,9 +52,10 @@ abstract class EndlessRecyclerViewScrollListener(layoutManager: LinearLayoutMana
             loading = false
             previousTotalItemCount = totalItemCount
         }
-        Timber.d("lastVisibleItemPosition = $lastVisibleItemPosition || visibleThreshold $visibleThreshold (${lastVisibleItemPosition + visibleThreshold}) || totalItemCount = $totalItemCount")
+        Timber.d("ENDLESS : lastVisibleItemPosition = $lastVisibleItemPosition || visibleThreshold $visibleThreshold (${lastVisibleItemPosition + visibleThreshold}) || totalItemCount = $totalItemCount")
         if (!loading && lastVisibleItemPosition + visibleThreshold > totalItemCount) {
             currentPage++
+            Timber.d("ENDLESS : loadmore!")
             onLoadMore(currentPage, totalItemCount, view)
             loading = true
         }

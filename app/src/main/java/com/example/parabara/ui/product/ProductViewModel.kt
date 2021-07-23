@@ -85,6 +85,7 @@ class ProductViewModel @Inject constructor(private val repository: Repository) :
             .doFinally { showLoading(false) }
             .subscribe({ response ->
                 response.onResult {
+                    showToast(R.string.product_update_success_message)
                     finishActivity(RESULT_OK)
                 }
             }, {
@@ -100,6 +101,7 @@ class ProductViewModel @Inject constructor(private val repository: Repository) :
             .doFinally { showLoading(false) }
             .subscribe({ response ->
                 response.onResult {
+                    showToast(R.string.product_apply_success_message)
                     finishActivity(RESULT_OK)
                 }
             }, {
