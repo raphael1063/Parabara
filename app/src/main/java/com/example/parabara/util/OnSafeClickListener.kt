@@ -1,3 +1,4 @@
+/*중복클릭 방지 클래스*/
 package com.example.parabara.util
 
 import android.os.SystemClock

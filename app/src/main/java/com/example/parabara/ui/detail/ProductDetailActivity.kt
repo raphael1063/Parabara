@@ -84,6 +84,6 @@ class ProductDetailActivity :
     }
 
     override fun onDeleteClicked() {
-        viewModel.onDeleteButtonClicked()
+        viewModel.onDialogRemoveButtonClicked()
     }
 }

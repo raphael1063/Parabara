@@ -1,3 +1,4 @@
+/*상세 화면 이미지 indicator*/
 package com.example.parabara.util
 
 import android.content.res.Resources

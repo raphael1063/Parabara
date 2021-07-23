@@ -128,18 +128,21 @@ class ProductViewModel @Inject constructor(private val repository: Repository) :
         var price = 0L
         var content = ""
         var imageList = listOf<Long>()
+        //상품명 체크
         if(!productTitle.value?.trim().isNullOrEmpty()) {
             title = productTitle.value!!
         } else {
             showToast(R.string.no_title_message)
             return
         }
+        //판매가격 체크
         if(!productPrice.value?.trim().isNullOrEmpty()) {
             price = productPrice.value!!.toLong()
         } else {
             showToast(R.string.no_price_message)
             return
         }
+        //상품 설명 체크
         if(!productContent.value?.trim().isNullOrEmpty()) {
             content = productContent.value!!
         } else {

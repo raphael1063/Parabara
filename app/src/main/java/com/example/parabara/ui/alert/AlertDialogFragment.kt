@@ -1,3 +1,4 @@
+/*상품 삭제확인 다이얼로그*/
 package com.example.parabara.ui.alert
 
 import android.os.Bundle

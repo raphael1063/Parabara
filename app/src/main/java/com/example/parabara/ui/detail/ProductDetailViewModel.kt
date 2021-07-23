@@ -65,19 +65,22 @@ class ProductDetailViewModel @Inject constructor(private val repository: Reposit
             }).addTo(compositeDisposable)
     }
 
+    //새로고침
     fun refresh() {
         getProductDetail(currentId)
     }
 
-    //
-    fun onDeleteButtonClicked() {
+    //삭제 버튼 클릭(다이얼로그)
+    fun onDialogRemoveButtonClicked() {
         removeProduct(currentId)
     }
 
+    //수정 버튼 클릭
     fun onEditButtonClicked(productInfo: ProductDetailResult) {
         _actionEditButtonClicked.value = Event(productInfo)
     }
 
+    //삭제 버튼 클릭(상품 상세 화면)
     fun onRemoveButtonClicked(id: Long) {
         _actionRemoveButtonClicked.value = Event(id)
     }

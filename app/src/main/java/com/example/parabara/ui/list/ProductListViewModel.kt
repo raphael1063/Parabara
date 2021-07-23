@@ -39,6 +39,7 @@ class ProductListViewModel @Inject constructor(private val repository: Repositor
         getList(isRefresh = false, isLoadMore = false, page = 1)
     }
 
+    //상품 리스트 조회 API
     private fun getList(isRefresh: Boolean, isLoadMore: Boolean, page: Int) {
         repository.getProductList(page, size)
             .observeOn(AndroidSchedulers.mainThread())
@@ -75,18 +76,22 @@ class ProductListViewModel @Inject constructor(private val repository: Repositor
             }).addTo(compositeDisposable)
     }
 
+    //리스트 새로고침
     fun refresh() {
         getList(isRefresh = true, isLoadMore = false, page = 1)
     }
 
+    //리스트 페이징
     fun loadMore(page: Int) {
         getList(isRefresh = false, isLoadMore = true, page = page)
     }
 
+    //상품 클릭
     fun onProductItemClicked(id: Long) {
         _actionProductItemClicked.value = Event(id)
     }
 
+    //상품 등록 버튼 클릭
     fun onApplyButtonClicked() {
         _actionApplyButtonClicked.value = Event(Unit)
     }
