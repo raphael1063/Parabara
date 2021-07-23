@@ -16,7 +16,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.list.ProductListActivity">
+        tools:context=".ui.list.ProductListActivity"
+        tools:ignore="ContentDescription,SpUsage">
 
         <TextView
             android:id="@+id/total_record"

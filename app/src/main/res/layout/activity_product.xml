@@ -16,7 +16,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:ignore="ContentDescription,SpUsage,Autofill">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="@dimen/dimen_0dp"
@@ -91,7 +92,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dimen_8dp"
                     android:layout_marginTop="12dp"
-                    android:hint="상품명"
+                    android:hint="@string/product_title"
+                    android:inputType="text"
                     android:text="@={vm.productTitle}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -103,7 +105,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dimen_8dp"
                     android:layout_marginTop="@dimen/dimen_12dp"
-                    android:hint="판매가격"
+                    android:hint="@string/price"
                     android:inputType="number"
                     android:text="@={vm.productPrice}"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -118,7 +120,7 @@
                     android:layout_marginTop="@dimen/dimen_12dp"
                     android:background="@drawable/bg_edit_text"
                     android:gravity="top"
-                    android:hint="상품설명을 작성해 주세요.\n\n브랜드, 사이즈, 사용감 등 자세히 작성해 주시면\n보다 빠르고 편한 거래를 하실 수 있으실 거에요:)"
+                    android:hint="@string/product_content_hint"
                     android:inputType="textMultiLine"
                     android:minHeight="300dp"
                     android:padding="@dimen/dimen_12dp"

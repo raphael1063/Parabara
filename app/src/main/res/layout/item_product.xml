@@ -22,7 +22,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         onSafeClick="@{() -> vm.onProductItemClicked(model.id)}"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:ignore="ContentDescription,SpUsage">
 
         <TextView
             android:layout_width="wrap_content"
@@ -67,7 +68,7 @@
             android:layout_marginHorizontal="@dimen/dimen_8dp"
             android:text="@{String.valueOf(model.price) + `원`}"
             android:textColor="@color/orange"
-            android:textSize="16dp"
+            android:textSize="@dimen/dimen_16dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/iv_list_product_image"
             app:layout_constraintEnd_toEndOf="parent"

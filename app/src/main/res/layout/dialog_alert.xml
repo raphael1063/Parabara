@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        tools:ignore="ContentDescription,SpUsage">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="300dp"
             android:layout_height="wrap_content">
@@ -14,7 +17,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_32dp"
-                android:text="삭제하시겠어요?"
+                android:text="@string/dialog_title_delete"
                 android:textColor="@color/black"
                 android:textSize="@dimen/dimen_12dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -37,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingVertical="12dp"
-                android:text="삭제"
+                android:text="@string/delete"
                 android:textColor="@color/black"
                 android:textSize="@dimen/dimen_12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -51,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingVertical="12dp"
-                android:text="취소"
+                android:text="@string/cancel"
                 android:textColor="@color/black"
                 android:textSize="@dimen/dimen_12dp"
                 app:layout_constraintBottom_toBottomOf="parent"

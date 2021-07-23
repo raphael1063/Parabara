@@ -13,7 +13,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:ignore="ContentDescription,SpUsage">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="0dp"
@@ -121,7 +122,7 @@
             android:gravity="center"
             android:paddingVertical="12dp"
             onSafeClick="@{() -> vm.onRemoveButtonClicked(vm.productInfo.id)}"
-            android:text="삭제"
+            android:text="@string/delete"
             android:textColor="@color/black"
             android:textSize="@dimen/dimen_14dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -137,7 +138,7 @@
             android:background="@drawable/bg_button"
             android:gravity="center"
             android:paddingVertical="12dp"
-            android:text="수정하기"
+            android:text="@string/edit"
             android:textColor="@color/black"
             android:textSize="@dimen/dimen_14dp"
             app:layout_constraintBottom_toBottomOf="parent"
