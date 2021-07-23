@@ -16,6 +16,12 @@ import javax.inject.Inject
 class ProductListViewModel @Inject constructor(private val repository: Repository) :
     BaseViewModel() {
 
+    private val _totalRecords = MutableLiveData<Int>()
+    val totalRecords: LiveData<Int> = _totalRecords
+
+    private val _currentPage = MutableLiveData<Int>()
+    val currentPage: LiveData<Int> = _currentPage
+
     private val _list = MutableLiveData<List<Row>?>()
     val list: LiveData<List<Row>?> = _list
 
@@ -25,12 +31,14 @@ class ProductListViewModel @Inject constructor(private val repository: Repositor
     private val _actionApplyButtonClicked = MutableLiveData<Event<Unit>>()
     val actionApplyButtonClicked: LiveData<Event<Unit>> = _actionApplyButtonClicked
 
+    private val productList = mutableListOf<Row>()
+
 
     init {
-        getList(false)
+        getList(isRefresh = false, isLoadMore = false, page = 1)
     }
 
-    private fun getList(isRefresh: Boolean) {
+    private fun getList(isRefresh: Boolean, isLoadMore: Boolean, page: Int) {
         repository.getProductList(page, size)
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe {
@@ -48,7 +56,15 @@ class ProductListViewModel @Inject constructor(private val repository: Repositor
             .subscribe({ response ->
                 response.onResult {
                     response.data?.let { data ->
-                        _list.value = data.rows.map { it.copy() }
+                        _totalRecords.value = data.records
+                        _currentPage.value = data.page
+                        if(isLoadMore) {
+                            productList.addAll(data.rows)
+                        } else {
+                            productList.clear()
+                            productList.addAll(data.rows)
+                        }
+                        _list.value = productList.map { it.copy() }
                     } ?: run {
                         showToast(R.string.empty_list_message)
                     }
@@ -59,7 +75,11 @@ class ProductListViewModel @Inject constructor(private val repository: Repositor
     }
 
     fun refresh() {
-        getList(true)
+        getList(isRefresh = true, isLoadMore = false, page = 1)
+    }
+
+    fun loadMore(page: Int) {
+        getList(isRefresh = false, isLoadMore = true, page = page)
     }
 
     fun onProductItemClicked(id: Long) {
@@ -71,7 +91,6 @@ class ProductListViewModel @Inject constructor(private val repository: Repositor
     }
 
     companion object {
-        private const val page = 1
         private const val size = 30
     }
 }

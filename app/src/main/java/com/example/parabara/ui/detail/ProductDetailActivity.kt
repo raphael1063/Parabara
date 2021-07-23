@@ -6,6 +6,8 @@ import androidx.activity.viewModels
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.example.parabara.R
 import com.example.parabara.base.BaseActivity
+import com.example.parabara.base.PRODUCT_ID
+import com.example.parabara.base.PRODUCT_INFO
 import com.example.parabara.databinding.ActivityProductDetailBinding
 import com.example.parabara.ui.alert.AlertDialogFragment
 import com.example.parabara.ui.product.ProductActivity
@@ -36,7 +38,7 @@ class ProductDetailActivity :
             rvDetailImageList.addItemDecoration(CirclePagerIndicatorDecoration())
             PagerSnapHelper().attachToRecyclerView(rvDetailImageList)
         }
-        viewModel.loadData(intent.getLongExtra("ProductId", -1))
+        viewModel.loadData(intent.getLongExtra(PRODUCT_ID, -1))
     }
 
     override fun observe() {
@@ -47,7 +49,7 @@ class ProductDetailActivity :
             actionEditButtonClicked.observe(this@ProductDetailActivity, { event ->
                 event.getContentIfNotHandled()?.let { productInfo ->
                     productEditorLauncher.launch(Intent(this@ProductDetailActivity, ProductActivity::class.java).apply {
-                        putExtra("ProductInfo", productInfo)
+                        putExtra(PRODUCT_INFO, productInfo)
                     })
                 }
             })
@@ -68,7 +70,7 @@ class ProductDetailActivity :
     }
 
     override fun onBackPressed() {
-        setResult(RESULT_OK)
+        setResult(RESULT_CANCELED)
         super.onBackPressed()
     }
 

@@ -11,8 +11,10 @@ import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.example.parabara.R
 import com.example.parabara.base.BaseActivity
+import com.example.parabara.base.PRODUCT_INFO
 import com.example.parabara.data.entities.ProductDetailResult
 import com.example.parabara.databinding.ActivityProductBinding
+import com.example.parabara.ext.asMultipart
 import com.example.parabara.ext.toast
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType
@@ -21,7 +23,6 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okio.BufferedSink
 import okio.source
-
 
 @AndroidEntryPoint
 class ProductActivity : BaseActivity<ActivityProductBinding>(R.layout.activity_product) {
@@ -69,7 +70,7 @@ class ProductActivity : BaseActivity<ActivityProductBinding>(R.layout.activity_p
             vm = viewModel
             rvProductImageList.adapter = adapter
         }
-        intent.getParcelableExtra<ProductDetailResult>("ProductInfo")?.let {
+        intent.getParcelableExtra<ProductDetailResult>(PRODUCT_INFO)?.let {
             viewModel.loadData(it)
         }
     }
@@ -120,25 +121,5 @@ class ProductActivity : BaseActivity<ActivityProductBinding>(R.layout.activity_p
         }
     }
 
-    fun Uri.asMultipart(name: String, contentResolver: ContentResolver): MultipartBody.Part? {
-        return contentResolver.query(this, null, null, null, null)?.let {
-            if (it.moveToNext()) {
-                val displayName = it.getString(it.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                val requestBody = object : RequestBody() {
-                    override fun contentType(): MediaType? {
-                        return contentResolver.getType(this@asMultipart)?.toMediaType()
-                    }
 
-                    override fun writeTo(sink: BufferedSink) {
-                        sink.writeAll(contentResolver.openInputStream(this@asMultipart)?.source()!!)
-                    }
-                }
-                it.close()
-                MultipartBody.Part.createFormData(name, displayName, requestBody)
-            } else {
-                it.close()
-                null
-            }
-        }
-    }
 }

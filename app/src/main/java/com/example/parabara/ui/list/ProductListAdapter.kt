@@ -26,6 +26,7 @@ class ProductListAdapter(private val viewModel: ProductListViewModel) :
 
         fun bind(row: Row, viewModel: ProductListViewModel) {
             with(binding) {
+                position = adapterPosition
                 model = row
                 vm = viewModel
             }
