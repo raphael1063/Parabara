@@ -128,21 +128,21 @@ class ProductViewModel @Inject constructor(private val repository: Repository) :
         var price = 0L
         var content = ""
         var imageList = listOf<Long>()
-        productTitle.value?.let {
-            title = it
-        } ?: run {
+        if(!productTitle.value?.trim().isNullOrEmpty()) {
+            title = productTitle.value!!
+        } else {
             showToast(R.string.no_title_message)
             return
         }
-        productPrice.value?.let {
-            price = it.toLong()
-        } ?: run {
+        if(!productPrice.value?.trim().isNullOrEmpty()) {
+            price = productPrice.value!!.toLong()
+        } else {
             showToast(R.string.no_price_message)
             return
         }
-        productContent.value?.let {
-            content = it
-        } ?: run {
+        if(!productContent.value?.trim().isNullOrEmpty()) {
+            content = productContent.value!!
+        } else {
             showToast(R.string.no_content_message)
             return
         }
